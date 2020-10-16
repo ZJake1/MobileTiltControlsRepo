@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject enemy;
-
+    private GameObject enemy;
     private Rigidbody2D rb;
+
+    private GameObject player;
 
     private float moveSpeed = 500;
 
     private void Start()
     {
+        enemy = gameObject;
+        player = GameObject.FindWithTag("Player");
         rb = enemy.GetComponent<Rigidbody2D>();
     }
 
@@ -25,8 +27,7 @@ public class Enemy : MonoBehaviour
 
     void Move() // Move the enemy forward
     {
-        print((enemy.transform.position - player.transform.position).magnitude);
-        if ((enemy.transform.position - player.transform.position).magnitude > 10)
+        if ((enemy.transform.position - player.transform.position).magnitude > 8)
         {
             rb.AddForce(-enemy.transform.right * moveSpeed * Time.deltaTime);
         }

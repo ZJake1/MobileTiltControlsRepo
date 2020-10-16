@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public GameObject player;
-
+    private GameObject player;
     private Rigidbody2D rb;
 
     private bool onMobile = false;
+
+    public int health = 10;
 
     private float moveSpeed = 50;
     private float maxSpeed = 2500;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        player = gameObject;
         rb = player.GetComponent<Rigidbody2D>();
     }
 
@@ -69,7 +71,7 @@ public class Player : MonoBehaviour
 
     void Rotate(Vector3 pos) // Rotate the player towards the given position
     {
-        Vector3 dif = player.transform.position + pos;
+        Vector3 dif = -(player.transform.position - pos);
         float zRot = Mathf.Atan2(dif.y, dif.x) * Mathf.Rad2Deg;
         player.transform.rotation = Quaternion.Euler(0, 0, zRot);
     }
