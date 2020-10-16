@@ -8,37 +8,55 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private bool onMobile = false;
+
+    private float moveSpeed = 50;
+    private float maxSpeed = 2500;
+
+    private Vector3 dir = new Vector3(0, 0, 0);
+
     private void Start()
     {
         rb = player.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Vector3 dir = new Vector3(0, 0, 0);
-        if (Input.GetKey("w"))
-        {
-            dir = new Vector3(0, dir.y + 0.1f, 0);
-        }
-        if (Input.GetKey("s"))
-        {
-            dir = new Vector3(0, dir.y + -0.1f, 0);
-        }
-        if (Input.GetKey("a"))
-        {
-            dir = new Vector3(dir.x + -0.1f, 0, 0);
-        }
-        if (Input.GetKey("d"))
-        {
-            dir = new Vector3(dir.x + 0.1f, 0, 0);
-        }
-        // dir = GetDirection(); // Get the direction of the tilted phone
-        Move(dir); // Move the player's character
-        Resistance(); // Remove velocity from the player to slow them down
+        ChangeDirection(); // Change the movement direction for the move function
+        Move(dir); // Move the character
+        Rotate((player.transform.position + new Vector3(rb.velocity.x, rb.velocity.y, 0))); // Rotate the character
     }
 
-    Vector3 GetDirection() // Function to check if the phone is tilted
+    void ChangeDirection()
+    {
+        dir = new Vector3(0, 0, 0);
+        if (!onMobile) // If on desktop change the dir variable to the direction pressed
+        {
+            if (Input.GetKey("w"))
+            {
+                dir = new Vector3(dir.x, dir.y + (moveSpeed * Time.deltaTime), 0);
+            }
+            if (Input.GetKey("s"))
+            {
+                dir = new Vector3(dir.x, dir.y + (-moveSpeed * Time.deltaTime), 0);
+            }
+            if (Input.GetKey("a"))
+            {
+                dir = new Vector3(dir.x + (-moveSpeed * Time.deltaTime), dir.y, 0);
+            }
+            if (Input.GetKey("d"))
+            {
+                dir = new Vector3(dir.x + (moveSpeed * Time.deltaTime), dir.y, 0);
+            }
+        }
+        else // If on mobile then get the direction relative to the phone's tilt direction
+        {
+            dir = GetDirection();
+        }
+    }
+
+    Vector3 GetDirection() // Find and return the direction of the tilted phone
     {
         Vector3 dir = new Vector3(Input.acceleration.x, Input.acceleration.y, 0);
         return dir;
@@ -46,12 +64,13 @@ public class Player : MonoBehaviour
 
     void Move(Vector3 dir) // Move the player's character towards the direction the phone was tilted
     {
-        print(dir);
-        rb.velocity = new Vector3(Mathf.Min(rb.velocity.x + dir.x, 10), Mathf.Min(rb.velocity.y + dir.y, 10), 0);
+        rb.velocity = new Vector3(Mathf.Min(rb.velocity.x + dir.x, maxSpeed), Mathf.Min(rb.velocity.y + dir.y, maxSpeed), 0);
     }
 
-    void Resistance()
+    void Rotate(Vector3 pos) // Rotate the player towards the given position
     {
-        rb.velocity -= rb.velocity / 180;
+        Vector3 dif = player.transform.position + pos;
+        float zRot = Mathf.Atan2(dif.y, dif.x) * Mathf.Rad2Deg;
+        player.transform.rotation = Quaternion.Euler(0, 0, zRot);
     }
 }
