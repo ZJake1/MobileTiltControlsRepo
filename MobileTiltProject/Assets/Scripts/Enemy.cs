@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject projectile;
+
+    private GameObject projectiles;
+
     private GameObject enemy;
     private Rigidbody2D rb;
 
@@ -11,10 +15,14 @@ public class Enemy : MonoBehaviour
 
     private float moveSpeed = 500;
 
+    private float attackCooldown = 5;
+
+    // Called right before update
     private void Start()
     {
         enemy = gameObject;
         player = GameObject.FindWithTag("Player");
+        projectiles = GameObject.FindWithTag("Projectiles");
         rb = enemy.GetComponent<Rigidbody2D>();
     }
 
@@ -22,14 +30,25 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         Move(); // Move the enemy
+        Attack(); // Fires a projectile
         Rotate(player.transform.position); // Rotate the enemy
     }
 
-    void Move() // Move the enemy forward
+    void Move() // Move the enemy towards its forward vector
     {
-        if ((enemy.transform.position - player.transform.position).magnitude > 8)
+        if ((enemy.transform.position - player.transform.position).magnitude > 8) // Check if the enemy is close enough to stop moving
         {
             rb.AddForce(-enemy.transform.right * moveSpeed * Time.deltaTime);
+        }
+    }
+
+    void Attack()
+    {
+        attackCooldown -= Time.deltaTime;
+        if (attackCooldown <= 0)
+        {
+            attackCooldown = 5;
+            Instantiate(projectile, enemy.transform.position, enemy.transform.rotation, projectiles.transform);
         }
     }
 

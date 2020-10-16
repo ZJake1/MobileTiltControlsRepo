@@ -14,11 +14,11 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        waitTimer -= Time.deltaTime;
-        if (waitTimer <= 0)
+        waitTimer -= Time.deltaTime; // Negate deltaTime every Update() (Negates a value of 1 per second)
+        if (waitTimer <= 0) // Check if the waitTimer is less than or at 0
         {
-            waitTimer = Random.Range(10, 20);
-            for (int i = 0; i < Random.Range(2, 4); i++)
+            waitTimer = Random.Range(10, 20); // Set the waitTimer to a random value between 10 and 20
+            for (int i = 0; i < Random.Range(2, 4); i++) // Loop the enemy spawn 2 to 3 times
             {
                 int hor;
                 int ver;
@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
                     }
                     hor = Random.Range(-screenWidth, screenWidth + 1);
                 }
-                Instantiate(enemy, new Vector3(hor, ver, 0), Quaternion.identity, transform);
+                Instantiate(enemy, new Vector3(hor, ver, 0), Quaternion.identity, transform); // Instantiate an enemy outside of the screen borders
             }
         }
     }
