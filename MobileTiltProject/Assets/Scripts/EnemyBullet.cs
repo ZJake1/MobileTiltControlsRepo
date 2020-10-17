@@ -22,19 +22,19 @@ public class EnemyBullet : MonoBehaviour
     // Called every frame
     private void Update()
     {
-        if (timer <= 0)
+        if (timer <= 0) // Checks if the bullets up timer has reached 0 and destroys it if this is the case
         {
             Destroy(bullet);
         }
-        timer -= Time.deltaTime;
-        rb.velocity = -bullet.transform.right * speed;
+        timer -= Time.deltaTime; // Negates deltaTime from the uptime timer
+        rb.velocity = -bullet.transform.right * speed; // sets the bullets velocity to be to the front of the sprite
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col) // Checks for collisions
     {
-        if (col.tag == "Player" && timer > 0)
+        if (col.tag == "Player" && timer > 0) // Checks if the hit object has the "Player" tag
         {
-            col.GetComponent<Player>().health--;
+            col.GetComponent<Player>().health--; // Negates 1 hp from the player
             Destroy(bullet);
         }
     }

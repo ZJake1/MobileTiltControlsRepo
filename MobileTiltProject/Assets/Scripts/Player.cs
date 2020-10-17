@@ -17,25 +17,69 @@ public class Player : MonoBehaviour
     public Sprite fullHeart;
     public Sprite halfHeart;
 
-    private float moveSpeed = 50;
-    private float maxSpeed = 2500;
+    public GameObject enemies;
+    public GameObject projectiles;
+    public GameObject barrels;
+
+    private float baseMoveSpeed = 50;
+    private float baseMaxSpeed = 2500;
+
+    private float moveSpeed;
+    private float maxSpeed;
 
     private Vector3 dir = new Vector3(0, 0, 0);
+
+    private float respawnTimer = 3;
 
     // Called right before update
     private void Start() // Declare variables
     {
         player = gameObject;
         rb = player.GetComponent<Rigidbody2D>();
+        moveSpeed = baseMoveSpeed;
+        maxSpeed = baseMaxSpeed;
     }
 
     // Update is called once per frame
     private void Update()
     {
+        Respawn(); // Respawns the player if they are dead
         ChangeDirection(); // Change the movement direction for the move function
         Move(dir); // Move the character
         Rotate((player.transform.position + new Vector3(rb.velocity.x, rb.velocity.y, 0))); // Rotate the character
-        UpdateUI();
+        UpdateUI(); // Updates all UI
+    }
+
+    void Respawn() // Checks if the player's health is less than or equal to 0 and respawns them if that is the case
+    {
+        if (health <= 0)
+        {
+            respawnTimer -= Time.deltaTime;
+            moveSpeed = 0;
+            if (respawnTimer <= 0)
+            {
+                ClearArena();
+                player.transform.position = new Vector3(0, 0, 0);
+                health = 10;
+                respawnTimer = 3;
+                moveSpeed = baseMoveSpeed;
+            }
+        }
+    }
+
+    void ClearArena() // Clears all enemies, projectiles and barrels in the arena;
+    {
+        ClearChildren(enemies);
+        ClearChildren(projectiles);
+        ClearChildren(barrels);
+    }
+
+    void ClearChildren(GameObject g) // Clears all children of the given GameObject
+    {
+        foreach (Transform c in g.transform) // Loops through each child in the game objects transform and destroys them
+        {
+            Destroy(c.gameObject);
+        }
     }
 
     void ChangeDirection()
@@ -62,13 +106,13 @@ public class Player : MonoBehaviour
         }
         else // If on mobile then get the direction relative to the phone's tilt direction
         {
-            dir = new Vector3(GetDirection().x * moveSpeed * Time.deltaTime, GetDirection().y * moveSpeed * Time.deltaTime, 0); // Set dir's x and y value to the Input.acceleration of the phone
+            dir = new Vector3(GetDirection().x, GetDirection().y, 0); // Set dir's x and y value to the Input.acceleration of the phone
         }
     }
 
     Vector3 GetDirection() // Find and return the direction of the tilted phone
     {
-        Vector3 newDir = Input.acceleration;
+        Vector3 newDir = Input.acceleration * moveSpeed * Time.deltaTime;
         return newDir;
     }
 
@@ -87,28 +131,36 @@ public class Player : MonoBehaviour
         }
     }
 
-    void UpdateUI()
+    void UpdateUI() // Updates all UI to show the current variable values
     {
-        for (int i = 0; i < hearts.transform.childCount; i++)
+        for (int i = 0; i < hearts.transform.childCount; i++) // For loop to check which heart icons should be there and which shouldn't
         {
-            if (health / 2 < i + 1)
+            if (health / 2 < i + 1) // Check if the player's health is less than the loop index
             {
-                if (Mathf.Ceil(health / 2) < i + 1)
+                if (Mathf.Ceil(health / 2) < i + 1) // Check if the player doesn't have half a health point and set the heart icon to null if this is the case
                 {
                     hearts.transform.GetChild(i).GetComponent<Image>().sprite = null;
                     hearts.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 }
-                else
+                else // If the player's health is on half set the heart icon to a half heart
                 {
                     hearts.transform.GetChild(i).GetComponent<Image>().sprite = halfHeart;
                     hearts.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
                 }
             }
-            else
+            else // If the player's health is more than or equal to the loop index make the icon display a full heart
             {
                 hearts.transform.GetChild(i).GetComponent<Image>().sprite = fullHeart;
                 hearts.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D col) // Collision check to see when the player touches an enemy
+    {
+        if (col.gameObject.tag == "Enemy") // Check for an enemy tag on the touched object
+        {
+            Destroy(col.gameObject); // Destroy the touched enemy
         }
     }
 }

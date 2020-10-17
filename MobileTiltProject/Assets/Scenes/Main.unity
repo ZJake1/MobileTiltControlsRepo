@@ -766,6 +766,9 @@ MonoBehaviour:
   hearts: {fileID: 1219315296}
   fullHeart: {fileID: 21300000, guid: acdfd2474ef4146449d78fd5412b3e6a, type: 3}
   halfHeart: {fileID: 21300000, guid: 3328f972bc6e3624ba03742da1ce1a5a, type: 3}
+  enemies: {fileID: 749247411}
+  projectiles: {fileID: 1624773094}
+  barrels: {fileID: 1703927406}
 --- !u!1 &998075433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1554,7 +1557,7 @@ GameObject:
   - component: {fileID: 1703927408}
   m_Layer: 0
   m_Name: Barrels
-  m_TagString: Barrel
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

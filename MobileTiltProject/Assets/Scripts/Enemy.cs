@@ -15,10 +15,10 @@ public class Enemy : MonoBehaviour
 
     private float moveSpeed = 500;
 
-    private float attackCooldown = 5;
+    private float attackCooldown = 3;
 
     // Called right before update
-    private void Start()
+    private void Start() // Declare variables
     {
         enemy = gameObject;
         player = GameObject.FindWithTag("Player");
@@ -36,19 +36,19 @@ public class Enemy : MonoBehaviour
 
     void Move() // Move the enemy towards its forward vector
     {
-        if ((enemy.transform.position - player.transform.position).magnitude > 8) // Check if the enemy is close enough to stop moving
+        if ((enemy.transform.position - player.transform.position).magnitude > 8) // Check if the enemy is far enough from the player to move closer
         {
-            rb.AddForce(-enemy.transform.right * moveSpeed * Time.deltaTime);
+            rb.AddForce(-enemy.transform.right * moveSpeed * Time.deltaTime); // Moves the enemy towards the forward side of the sprite
         }
     }
 
-    void Attack()
+    void Attack() // Makes the enemy shoot a bullet infront of it
     {
-        attackCooldown -= Time.deltaTime;
-        if (attackCooldown <= 0)
+        attackCooldown -= Time.deltaTime; // Negates deltaTime from the attack cooldown value
+        if (attackCooldown <= 0) // Checks if the attack is off cooldown
         {
-            attackCooldown = 5;
-            Instantiate(projectile, enemy.transform.position, enemy.transform.rotation, projectiles.transform);
+            attackCooldown = Random.Range(4, 8); // Sets a new attack cooldown randomly between the given values
+            Instantiate(projectile, enemy.transform.position, enemy.transform.rotation, projectiles.transform); // Instantiates the bullet at the right position and rotation
         }
     }
 
