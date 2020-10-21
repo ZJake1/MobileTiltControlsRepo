@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     private GameObject player;
 
-    private float moveSpeed = 500;
+    private float moveSpeed = 250;
 
     private float attackCooldown = 3;
 
@@ -39,6 +39,10 @@ public class Enemy : MonoBehaviour
         if ((enemy.transform.position - player.transform.position).magnitude > 8) // Check if the enemy is far enough from the player to move closer
         {
             rb.AddForce(-enemy.transform.right * moveSpeed * Time.deltaTime); // Moves the enemy towards the forward side of the sprite
+        }
+        else if ((enemy.transform.position - player.transform.position).magnitude < 6)
+        {
+            rb.AddForce(enemy.transform.right * moveSpeed * Time.deltaTime); // Moves the enemy away from the forward side of the sprite
         }
     }
 

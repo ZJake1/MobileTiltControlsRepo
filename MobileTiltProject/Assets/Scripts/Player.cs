@@ -11,8 +11,11 @@ public class Player : MonoBehaviour
     private bool onMobile = false;
 
     public float health = 10;
+    private float timeAlive = 0;
 
     public GameObject hearts;
+    public GameObject timerText;
+    public GameObject gameOverText;
 
     public Sprite fullHeart;
     public Sprite halfHeart;
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour
         {
             respawnTimer -= Time.deltaTime;
             moveSpeed = 0;
+            gameOverText.SetActive(true);
             if (respawnTimer <= 0)
             {
                 ClearArena();
@@ -63,6 +67,8 @@ public class Player : MonoBehaviour
                 health = 10;
                 respawnTimer = 3;
                 moveSpeed = baseMoveSpeed;
+                gameOverText.SetActive(false);
+                timeAlive = 0;
             }
         }
     }
@@ -133,6 +139,11 @@ public class Player : MonoBehaviour
 
     void UpdateUI() // Updates all UI to show the current variable values
     {
+        if (health > 0)
+        {
+            timeAlive += Time.deltaTime;
+        }
+        timerText.GetComponent<Text>().text = Mathf.Floor(timeAlive).ToString();
         for (int i = 0; i < hearts.transform.childCount; i++) // For loop to check which heart icons should be there and which shouldn't
         {
             if (health / 2 < i + 1) // Check if the player's health is less than the loop index
