@@ -8,7 +8,7 @@ public class HeartsSpawner : MonoBehaviour
 
     private GameObject player;
 
-    private float timer;
+    private float timer = 10;
 
     private int screenWidth = 18;
     private int screenHeight = 10;
@@ -25,7 +25,7 @@ public class HeartsSpawner : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            timer = Random.Range(5.0f, 10.0f);
+            timer = Random.Range(8.0f, 16.0f);
             int hor;
             int ver;
             if (Random.Range(0, 2) == 1)

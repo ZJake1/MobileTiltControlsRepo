@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
 
     public GameObject heartsUI;
     public GameObject timerText;
-    public GameObject gameOverText;
 
+    public GameObject gameOverUI;
     public GameObject pauseUI;
     
     public Sprite fullHeart;
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public GameObject enemies;
     public GameObject projectiles;
     public GameObject barrels;
+    public GameObject hearts;
 
     private float baseMoveSpeed = 50;
     private float baseMaxSpeed = 2500;
@@ -51,31 +52,41 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Respawn(); // Respawns the player if they are dead
+        EndGame(); // Respawns the player if they are dead
         ChangeDirection(); // Change the movement direction for the move function
         Move(dir); // Move the character
         Rotate((player.transform.position + new Vector3(rb.velocity.x, rb.velocity.y, 0))); // Rotate the character
         UpdateUI(); // Updates all UI
     }
 
-    void Respawn() // Checks if the player's health is less than or equal to 0 and respawns them if that is the case
+    void EndGame() // Checks if the player's health is less than or equal to 0 and respawns them if that is the case
     {
         if (health <= 0)
         {
             respawnTimer -= Time.deltaTime;
             moveSpeed = 0;
-            gameOverText.SetActive(true);
+            pauseUI.SetActive(false);
+            gameOverUI.SetActive(true);
             if (respawnTimer <= 0)
             {
-                ClearArena();
-                player.transform.position = new Vector3(0, 0, 0);
-                health = maxHealth;
-                respawnTimer = 3;
-                moveSpeed = baseMoveSpeed;
-                gameOverText.SetActive(false);
-                timeAlive = 0;
+                if (Time.timeScale > 0)
+                {
+                    Time.timeScale -= Time.deltaTime;
+                }
             }
         }
+    }
+
+    public void Respawn()
+    {
+        ClearArena();
+        player.transform.position = new Vector3(0, 0, 0);
+        health = maxHealth;
+        respawnTimer = 3;
+        moveSpeed = baseMoveSpeed;
+        timeAlive = 0;
+        gameOverUI.SetActive(false);
+        Time.timeScale = 1;
     }
 
     void ClearArena() // Clears all enemies, projectiles and barrels in the arena;
@@ -83,6 +94,7 @@ public class Player : MonoBehaviour
         ClearChildren(enemies);
         ClearChildren(projectiles);
         ClearChildren(barrels);
+        ClearChildren(hearts);
     }
 
     void ClearChildren(GameObject g) // Clears all children of the given GameObject
@@ -144,7 +156,7 @@ public class Player : MonoBehaviour
 
     void UpdateUI() // Updates all UI to show the current variable values
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && gameOverUI.activeSelf == false)
         {
             if (Time.timeScale == 0)
             {
