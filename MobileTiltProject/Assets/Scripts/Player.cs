@@ -13,10 +13,10 @@ public class Player : MonoBehaviour
     public float health = 10;
     private float timeAlive = 0;
 
-    public GameObject hearts;
+    public GameObject heartsUI;
     public GameObject timerText;
     public GameObject gameOverText;
-
+    
     public Sprite fullHeart;
     public Sprite halfHeart;
 
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     private Vector3 dir = new Vector3(0, 0, 0);
 
     private float respawnTimer = 3;
-
+    
     // Called right before update
     private void Start() // Declare variables
     {
@@ -144,25 +144,25 @@ public class Player : MonoBehaviour
             timeAlive += Time.deltaTime;
         }
         timerText.GetComponent<Text>().text = Mathf.Floor(timeAlive).ToString();
-        for (int i = 0; i < hearts.transform.childCount; i++) // For loop to check which heart icons should be there and which shouldn't
+        for (int i = 0; i < heartsUI.transform.childCount; i++) // For loop to check which heart icons should be there and which shouldn't
         {
             if (health / 2 < i + 1) // Check if the player's health is less than the loop index
             {
                 if (Mathf.Ceil(health / 2) < i + 1) // Check if the player doesn't have half a health point and set the heart icon to null if this is the case
                 {
-                    hearts.transform.GetChild(i).GetComponent<Image>().sprite = null;
-                    hearts.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    heartsUI.transform.GetChild(i).GetComponent<Image>().sprite = null;
+                    heartsUI.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 }
                 else // If the player's health is on half set the heart icon to a half heart
                 {
-                    hearts.transform.GetChild(i).GetComponent<Image>().sprite = halfHeart;
-                    hearts.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+                    heartsUI.transform.GetChild(i).GetComponent<Image>().sprite = halfHeart;
+                    heartsUI.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
                 }
             }
             else // If the player's health is more than or equal to the loop index make the icon display a full heart
             {
-                hearts.transform.GetChild(i).GetComponent<Image>().sprite = fullHeart;
-                hearts.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+                heartsUI.transform.GetChild(i).GetComponent<Image>().sprite = fullHeart;
+                heartsUI.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
             }
         }
     }
