@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseUI : MonoBehaviour
 {
@@ -17,11 +18,6 @@ public class PauseUI : MonoBehaviour
 
     public void LoadTitleScene()
     {
-
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
 }
