@@ -47,7 +47,11 @@ public class EnemyBullet : MonoBehaviour
             col.GetComponent<Player>().health--; // Negates 1 hp from the player
             timer = 0;
         }
-        if (col.tag == "Barrel")
+        else if (col.tag == "Barrel")
+        {
+            Destroy(col.gameObject);
+        }
+        else if (col.tag == "Health")
         {
             Destroy(col.gameObject);
         }

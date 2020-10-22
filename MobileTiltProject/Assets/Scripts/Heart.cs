@@ -8,8 +8,19 @@ public class Heart : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            Destroy(gameObject);
-            col.GetComponent<Player>().health++;
+            Player pl = col.GetComponent<Player>();
+            if (pl.health < pl.maxHealth)
+            {
+                Destroy(gameObject);
+                if (pl.health + 1 >= pl.maxHealth)
+                {
+                    pl.health += 1;
+                }
+                else
+                {
+                    pl.health += 2;
+                }
+            }
         }
     }
 }

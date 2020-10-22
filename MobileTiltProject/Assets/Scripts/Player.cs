@@ -10,12 +10,16 @@ public class Player : MonoBehaviour
 
     private bool onMobile = false;
 
-    public float health = 10;
+    public float health;
+    public int maxHealth = 10;
+
     private float timeAlive = 0;
 
     public GameObject heartsUI;
     public GameObject timerText;
     public GameObject gameOverText;
+
+    public GameObject pauseUI;
     
     public Sprite fullHeart;
     public Sprite halfHeart;
@@ -39,6 +43,7 @@ public class Player : MonoBehaviour
     {
         player = gameObject;
         rb = player.GetComponent<Rigidbody2D>();
+        health = maxHealth;
         moveSpeed = baseMoveSpeed;
         maxSpeed = baseMaxSpeed;
     }
@@ -64,7 +69,7 @@ public class Player : MonoBehaviour
             {
                 ClearArena();
                 player.transform.position = new Vector3(0, 0, 0);
-                health = 10;
+                health = maxHealth;
                 respawnTimer = 3;
                 moveSpeed = baseMoveSpeed;
                 gameOverText.SetActive(false);
@@ -139,6 +144,20 @@ public class Player : MonoBehaviour
 
     void UpdateUI() // Updates all UI to show the current variable values
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Time.timeScale == 0)
+            {
+                Time.timeScale = 1;
+                pauseUI.SetActive(false);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                pauseUI.SetActive(true);
+            }
+            
+        }
         if (health > 0)
         {
             timeAlive += Time.deltaTime;

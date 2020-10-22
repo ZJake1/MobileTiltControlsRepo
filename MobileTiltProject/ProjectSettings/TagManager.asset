@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Barrel
   - Projectiles
+  - Health
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - 
   - 
   - Collisions
-  - Enemies
+  - MovingObject
   - Walls
   - 
   - 
@@ -44,14 +45,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: MovingObject
+    uniqueID: 876269735
+    locked: 0
   - name: Enemies
     uniqueID: 3260243733
     locked: 0
   - name: Player
     uniqueID: 3755770193
-    locked: 0
-  - name: Projectiles
-    uniqueID: 876269735
     locked: 0
   - name: Walls
     uniqueID: 3456005965
