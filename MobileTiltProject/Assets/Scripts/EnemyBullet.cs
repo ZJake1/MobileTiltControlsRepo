@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    Rigidbody2D rb;
+    SpriteRenderer sr;
 
-    private GameObject player;
+    GameObject player;
 
-    private int speed = 3;
+    int speed = 3;
 
-    private float maxTimer = 8;
-    private float timer;
+    float maxTimer = 8f;
+    float timer;
 
-    private float rotSpeed = 3;
+    float rotSpeed = 3f;
+
+    Vector3 startSize;
+    float sizeMulti = 0f;
 
     // Fires right before Update()
     private void Start()
@@ -23,6 +26,7 @@ public class EnemyBullet : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         player = GameObject.FindWithTag("Player");
         timer = maxTimer;
+        startSize = transform.localScale;
     }
 
     // Called every frame
@@ -34,7 +38,11 @@ public class EnemyBullet : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotSpeed * Time.deltaTime);
         if (timer <= 0) // Checks if the bullets up timer has reached 0 and destroys it if this is the case
         {
-            Destroy(gameObject);
+            if (transform.localScale.magnitude > startSize.magnitude * 2)
+                Destroy(gameObject);
+
+            transform.localScale += startSize * sizeMulti;
+            sizeMulti += Time.deltaTime;
         }
         timer -= Time.deltaTime; // Negates deltaTime from the uptime timer
         rb.velocity = -transform.right * speed; // sets the bullets velocity to be to the front of the sprite
@@ -48,10 +56,6 @@ public class EnemyBullet : MonoBehaviour
             timer = 0;
         }
         else if (col.tag == "Barrel")
-        {
-            Destroy(col.gameObject);
-        }
-        else if (col.tag == "Health")
         {
             Destroy(col.gameObject);
         }

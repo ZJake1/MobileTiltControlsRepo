@@ -6,32 +6,52 @@ public class Enemy : MonoBehaviour
 {
     public GameObject projectile;
 
-    private GameObject projectiles;
+    GameObject projectiles;
 
-    private GameObject enemy;
-    private Rigidbody2D rb;
+    public int health = 1;
 
-    private GameObject player;
+    GameObject enemy;
+    Rigidbody2D rb;
 
-    private float moveSpeed = 250;
+    GameObject player;
 
-    private float attackCooldown = 3;
+    float moveSpeed = 250f;
+
+    float attackCooldown = 3f;
+
+    Vector3 startSize;
+    float sizeMulti = 0f;
 
     // Called right before update
     private void Start() // Declare variables
     {
+        health = 1;
+        
         enemy = gameObject;
         player = GameObject.FindWithTag("Player");
         projectiles = GameObject.FindWithTag("Projectiles");
         rb = enemy.GetComponent<Rigidbody2D>();
+
+        startSize = transform.localScale;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        Move(); // Move the enemy
-        Attack(); // Fires a projectile
-        Rotate(player.transform.position); // Rotate the enemy
+        if (health > 0)
+        {
+            Move(); // Move the enemy
+            Attack(); // Fires a projectile
+            Rotate(player.transform.position); // Rotate the enemy
+        }
+        else
+        {
+            if (transform.localScale.magnitude > startSize.magnitude * 2)
+                Destroy(gameObject);
+
+            transform.localScale += startSize * sizeMulti;
+            sizeMulti += Time.deltaTime;
+        }
     }
 
     void Move() // Move the enemy towards its forward vector

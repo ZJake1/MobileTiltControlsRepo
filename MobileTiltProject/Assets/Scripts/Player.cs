@@ -202,7 +202,7 @@ public class Player : MonoBehaviour
     {
         if (col.gameObject.tag == "Enemy") // Check for an enemy tag on the touched object
         {
-            Destroy(col.gameObject); // Destroy the touched enemy
+            col.transform.GetComponent<Enemy>().health--;
         }
     }
 }
