@@ -6,6 +6,10 @@ ScriptsOnlyBuild:
     - Enemy
     - EnemyBullet
     - EnemySpawner
+    - Heart
+    - HeartsSpawner
+    - MenuUI
+    - PauseUI
     - Player
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
@@ -16,6 +20,7 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
@@ -48,32 +53,40 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
-    - Class: 108
-      Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 11716}
     - Class: 114
-      Script: {instanceID: 11764}
+      Script: {instanceID: 11752}
     - Class: 114
-      Script: {instanceID: 11896}
+      Script: {instanceID: 11766}
     - Class: 114
-      Script: {instanceID: 11936}
+      Script: {instanceID: 11898}
     - Class: 114
-      Script: {instanceID: 11960}
+      Script: {instanceID: 11938}
     - Class: 114
-      Script: {instanceID: 12372}
+      Script: {instanceID: 11962}
     - Class: 114
-      Script: {instanceID: 13008}
+      Script: {instanceID: 12374}
     - Class: 114
-      Script: {instanceID: 13204}
+      Script: {instanceID: 12430}
     - Class: 114
-      Script: {instanceID: 13368}
+      Script: {instanceID: 12432}
     - Class: 114
-      Script: {instanceID: 13586}
+      Script: {instanceID: 12588}
     - Class: 114
-      Script: {instanceID: 13608}
+      Script: {instanceID: 12838}
     - Class: 114
-      Script: {instanceID: 13754}
+      Script: {instanceID: 13016}
+    - Class: 114
+      Script: {instanceID: 13212}
+    - Class: 114
+      Script: {instanceID: 13376}
+    - Class: 114
+      Script: {instanceID: 13594}
+    - Class: 114
+      Script: {instanceID: 13616}
+    - Class: 114
+      Script: {instanceID: 13762}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -83,6 +96,55 @@ ScriptsOnlyBuild:
     - Class: 196
       Script: {instanceID: 0}
     - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/Menu.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11716}
+    - Class: 114
+      Script: {instanceID: 11898}
+    - Class: 114
+      Script: {instanceID: 11938}
+    - Class: 114
+      Script: {instanceID: 12374}
+    - Class: 114
+      Script: {instanceID: 12588}
+    - Class: 114
+      Script: {instanceID: 12838}
+    - Class: 114
+      Script: {instanceID: 13376}
+    - Class: 114
+      Script: {instanceID: 13762}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -105,6 +167,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SelectionCaret
+  - hash:
+      serializedVersion: 2
+      Hash: 764310837a40c25e0b7a3be858025d63
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PauseUI
   - hash:
       serializedVersion: 2
       Hash: 87ff43d2baf3385cba327d8f803a4ebb
@@ -185,7 +253,7 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: 152538b8026845c9c446c16cecdde311
+      Hash: 614fd555ca633ee112147827fe3a7f15
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Enemy
@@ -293,10 +361,28 @@ ScriptsOnlyBuild:
     className: ControlTrack
   - hash:
       serializedVersion: 2
+      Hash: b9900f0131806e11a5991e0da093ffce
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HeartsSpawner
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Heart
+  - hash:
+      serializedVersion: 2
       Hash: 8dc90e648ac06f43bdd31ac9fa8f4579
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
+  - hash:
+      serializedVersion: 2
+      Hash: 10fadd5f8d92d5fde3e45b2bc6f8aa09
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MenuUI
   - hash:
       serializedVersion: 2
       Hash: 040dd48e3a027d5424519a5fa2009df4
@@ -449,7 +535,7 @@ ScriptsOnlyBuild:
     className: BarrelSpawner
   - hash:
       serializedVersion: 2
-      Hash: 494e78f135481f5c5d2d52e7c7cc2931
+      Hash: 5b2a17155495014d0113a1fd30288b17
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -551,6 +637,6 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 5
   scenePathNames:
+  - Assets/Scenes/Menu.unity
   - Assets/Scenes/Main.unity
-  playerPath: C:/Users/zorko/OneDrive/Documents/GitHub/Shared-Rep/Build/New Unity
-    Project.exe
+  playerPath: H:/GitHub-local/MobileTiltControlsRepo/New folder/Spit Bois.exe

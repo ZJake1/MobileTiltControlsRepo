@@ -11,7 +11,7 @@ public class BarrelSpawner : MonoBehaviour
     private int screenWidth = 18;
     private int screenHeight = 10;
 
-    private float waitTimer = 15;
+    private float waitTimer = 10;
 
     // Start is called right as the script is instantiated
     private void Start()
@@ -25,7 +25,7 @@ public class BarrelSpawner : MonoBehaviour
         waitTimer -= Time.deltaTime; // Negates time from the waitTimer
         if (waitTimer <= 0) // Checks if the waitTimer is less than or equal to 0
         {
-            waitTimer = Random.Range(5, 15); // Sets a new random waitTimer between the given values
+            waitTimer = Random.Range(5.0f, 15.0f); // Sets a new random waitTimer between the given values
             for (int i = 0; i < Random.Range(1, 3); i++) // Loops a random number of times between the given values
             {
                 int hor;

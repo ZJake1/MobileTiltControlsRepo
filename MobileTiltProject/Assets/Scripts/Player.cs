@@ -141,7 +141,14 @@ public class Player : MonoBehaviour
 
     void Move(Vector3 dir) // Move the player's character towards the direction the phone was tilted
     {
-        rb.velocity = new Vector3(Mathf.Min(rb.velocity.x + dir.x, maxSpeed), Mathf.Min(rb.velocity.y + dir.y, maxSpeed), 0);
+        if (Input.GetMouseButton(0))
+        {
+            // rb.velocity = new Vector3(Mathf.Min(rb.velocity.x + mousePos.x, maxSpeed), Mathf.Min(rb.velocity.y + mousePos.y, maxSpeed), 0);
+        }
+        else
+        {
+            rb.velocity = new Vector3(Mathf.Min(rb.velocity.x + dir.x, maxSpeed), Mathf.Min(rb.velocity.y + dir.y, maxSpeed), 0);
+        }
     }
 
     void Rotate(Vector3 pos) // Rotate the player towards the given position
